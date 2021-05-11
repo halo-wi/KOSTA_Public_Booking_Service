@@ -18,7 +18,7 @@
 <jsp:include page="../common/header.jsp"></jsp:include>
 
 
-<form id="myfrm" action="empUpdate" method="post">
+<form id="myfrm" action="empDetail.do" method="post">
 직원번호:<input type="text" name="employee_id" value="${emp.employee_id}"><br>
 성:<input type="text" name="last_name" value="${emp.last_name}"><br>
 이름:<input type="text" name="first_name" value="${emp.first_name}"><br>
@@ -66,7 +66,7 @@ for(JobVO j:jlist){
 
 
 
-<input type="text" name="job_id" value="${emp.job_id}"><br>
+<%-- <input type="text" name="job_id" value="${emp.job_id}"><br> --%>
 이메일:<input type="text" name="email" value="${emp.email}"><br>
 <input type="submit" value="수정하기">
 <input type="button" id="btnUpdate" value="수정하기2">

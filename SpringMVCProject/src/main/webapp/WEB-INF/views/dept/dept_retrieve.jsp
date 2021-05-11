@@ -43,6 +43,3 @@ function call(deptid){
 </script>
 </body>
 </html>
-
-
-

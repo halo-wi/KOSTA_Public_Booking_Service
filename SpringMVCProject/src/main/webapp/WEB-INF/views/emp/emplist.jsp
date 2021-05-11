@@ -21,7 +21,7 @@ tr:first-of-type {
 <body>
 <h1>직원목록</h1>
 <!-- 표준액션 컴파일후 합친다-->
-<jsp:include page="../common/header.jsp"></jsp:include>
+<%-- <jsp:include page="../common/header.jsp"></jsp:include> --%>
 
 <a href="empinsert.do">신규등록</a>
 <br><br>
@@ -40,7 +40,7 @@ tr:first-of-type {
    <td>입사일</td><td>JOB</td><td>이메일</td><td>삭제</td>
  </tr>
 <c:forEach var = "emp"  items="${emplist }">
-<c:url value="empDetail"  var="empD">
+<c:url value="empDetail.do"  var="empD">
 <c:param name="empid" value="${emp.employee_id}"></c:param>
 </c:url>
  <tr>
@@ -68,11 +68,11 @@ tr:first-of-type {
  --%>[]
 <!-- ㅋ머파일 전에 경롤에서 ㅠㅏ일을 찾아서 합친다. -->
 
-<jsp:include page="${cPath }/common/footer.jsp"/>
+<%-- <jsp:include page="${cPath }/common/footer.jsp"/> --%>
 
 <script>
 function call(empid){
-	location.href="empDelete?empid=" + empid ;
+	location.href="empDelete.do?empid=" + empid ;
 }
 </script>
 </body>

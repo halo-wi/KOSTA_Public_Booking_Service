@@ -14,11 +14,11 @@
 <h1>${appInfo }</h1>
 <jsp:include page="../common/header.jsp"></jsp:include>
 <h1>직원 신규등록 </h1>
-<form action="empInsert" method="post" enctype="multipart/form-data">
+<form action="empinsert.do" method="post" >
 직원번호:<input type="text" name="employee_id"  ><br>
-성:<input type="text" name="last_name"  ><br>
-이름:<input type="text" name="first_name"  ><br>
-급여:<input type="number" name="salary" ><br>
+성:<input type="text" name="last_name"  value="qwe"><br>
+이름:<input type="text" name="first_name"   value="qwe"><br>
+급여:<input type="number" name="salary"  value="100"><br>
 부서:
 <select name="department_id" >
    <%
@@ -42,9 +42,9 @@ for(ManagerVO m:mlist){
 </select>
 
 <input type="number" name="manager_id"><br>
-전화번호:<input type="text" name="phone_number"  ><br>
-커미션:<input type="text" name="commission_pct"  ><br>
-입사일:<input type="text" name="hire_date"  ><br>
+전화번호:<input type="text" name="phone_number"   value="011"><br>
+커미션:<input type="text" name="commission_pct"  value="0" ><br>
+입사일:<input type="text" name="hire_date"  value="2010-10-10" ><br>
 직책:
 <select name="job_id">
 <%
@@ -56,7 +56,7 @@ for(JobVO j:jlist){
 </select>
 
 <br>
-이메일:<input type="text" name="email"  ><br>
+이메일:<input type="text" name="email"  value="qwe" ><br>
 사진: <input type="file" name="photos"><br>
 <input type="submit" value="입력하기">
 

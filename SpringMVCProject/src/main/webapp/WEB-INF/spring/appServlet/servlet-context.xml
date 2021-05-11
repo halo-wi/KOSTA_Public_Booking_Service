@@ -21,22 +21,21 @@
 		<property name="suffix" value=".jsp" />
 	</bean>
 	
-	<context:component-scan base-package="com.kosta" />
+	<!-- @Component @Repository @Service-->
+	<context:component-scan base-package="com.kosta, net.spring" />
 	
-	<bean id="propertyConfigurer"
-		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="locations">
-			<list>
-				<value>classpath:/oracledb.properties</value>
-			</list>
+	<bean
+		class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<property name="exceptionMappings">
+			<props>
+				<prop key="java.lang.ArithmeticException"> 
+					error/error500-1
+				</prop>
+				<prop key="java.lang.Exception">
+					error/error500-2
+				</prop>
+			</props>
 		</property>
-	</bean>
-	<bean id="dataSource"
-		class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
-		<property name="driverClass" value="${jdbc.driverClassName}" />
-		<property name="url" value="${jdbc.url}" />
-		<property name="username" value="${jdbc.username}" />
-		<property name="password" value="${jdbc.password}" />
 	</bean>
 	
 </beans>
