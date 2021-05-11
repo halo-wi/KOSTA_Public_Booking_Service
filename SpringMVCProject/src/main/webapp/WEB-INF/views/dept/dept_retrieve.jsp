@@ -19,7 +19,7 @@
 <h1>부서목록</h1>
 <jsp:include page="../common/header.jsp"></jsp:include>
 <br>
-<a href="deptInsert">신규등록</a>
+<a href="deptInsert.do">신규등록</a>
 
 <hr>
 <table>

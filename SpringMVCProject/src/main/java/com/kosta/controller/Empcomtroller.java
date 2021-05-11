@@ -6,59 +6,60 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.kosta.model.DeptDAO;
-import com.kosta.model.EmpDAO;
+import com.kosta.business.DeptServiceInterface;
+import com.kosta.business.EmpService;
+import com.kosta.business.EmpServiceImpl;
 import com.kosta.model.EmpVO;
 
 @Controller
 public class Empcomtroller {
 
 	@Autowired
-	EmpDAO empDAO;
+	EmpService empservice;
 	@Autowired
-	DeptDAO deptDAO;
-
+	DeptServiceInterface deptservice;
+	
 	@RequestMapping("emp/emplist.do")
 	public String emplist(Model model) {
-		model.addAttribute("emplist", empDAO.selectAll());
+		model.addAttribute("emplist", empservice.selectAll());
 		return "emp/emplist";
 
 	}
 
 	@RequestMapping("emp/empinsert.do")
 	public String empinsert(Model model) {
-		model.addAttribute("dlist", deptDAO.selectAll());
-		model.addAttribute("mlist", deptDAO.selectAllManager());
-		model.addAttribute("jlist", empDAO.selectAllJobs());
+		model.addAttribute("dlist", deptservice.findAll());
+		model.addAttribute("mlist", deptservice.findAllManager());
+		model.addAttribute("jlist", empservice.selectAllJobs());
 		return "emp/empinsert"; // forward 생략
 
 	}
 
 	@RequestMapping(value = "emp/empinsert.do", method = RequestMethod.POST)
 	public String empinsertPost(EmpVO emp) {
-		empDAO.insertEmp(emp);
+		empservice.insertEmp(emp);
 
 		return "redirect:/emp/emplist.do";
 	}
 
 	@RequestMapping("/emp/empDetail.do")
 	public String empDetailGet(Model model, int empid) {
-		model.addAttribute("dlist", deptDAO.selectAll());
-		model.addAttribute("mlist", deptDAO.selectAllManager());
-		model.addAttribute("jlist", empDAO.selectAllJobs());
-		model.addAttribute("emp", empDAO.selectById(empid));
+		model.addAttribute("dlist", deptservice.findAll());
+		model.addAttribute("mlist", deptservice.findAllManager());
+		model.addAttribute("jlist", empservice.selectAllJobs());
+		model.addAttribute("emp", empservice.selectById(empid));
 		return "emp/empdetail";
 	}
 	
 	@RequestMapping(value = "/emp/empDetail.do", method = RequestMethod.POST)
 	public String empDetailPost(EmpVO emp) {
-		empDAO.updateEmp(emp);
+		empservice.updateEmp(emp);
 		System.out.println("?");
 		return "redirect:/emp/emplist.do";
 	}
 	@RequestMapping("/emp/empDelete.do")
 	public String empDeleteGet(int empid) {
-		empDAO.deleteEmp(empid);
+		empservice.deleteEmp(empid);
 		return "redirect:/emp/emplist.do";
 	}
 
