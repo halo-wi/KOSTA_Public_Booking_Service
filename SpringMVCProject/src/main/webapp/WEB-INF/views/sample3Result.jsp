@@ -4,10 +4,16 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta  http-equiv="refresh"  content="3;url=deptlist.do" >
 <title>Insert title here</title>
 </head>
 <body>
-<h1>${message }</h1>
+<h1>sample3</h1>
+<h1>${title}</h1>
+${id }<br>
+${userpass}<br>
+${email }<br>
+${email2 }<br>
+${userinfo.UserVO}<br>
+${user}<br>
 </body>
 </html>

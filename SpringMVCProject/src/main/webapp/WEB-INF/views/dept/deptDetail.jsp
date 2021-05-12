@@ -9,7 +9,7 @@
 <body>
 <h1>부서의 상세보기....${myname }</h1>
 <jsp:include page="../common/header.jsp"></jsp:include>
-<form action="deptDetail" method="post">
+<form action="deptDetail.do" method="post">
 
 부서번호:<input type="number" value="${dept.department_id}" name="department_id"><br>
 부서이름:<input type="text" value="${dept.department_name}" name="department_name"><br>

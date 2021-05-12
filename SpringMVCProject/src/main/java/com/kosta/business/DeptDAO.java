@@ -1,4 +1,4 @@
-package com.kosta.model;
+package com.kosta.business;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,17 +11,41 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import com.kosta.model.DeptVO;
+import com.kosta.model.LocationVO;
+import com.kosta.model.ManagerVO;
 import com.kosta.util.DBUtil;
 
-@Repository
-public class DeptDAO {
+@Repository("deptDAO_jdbc")
+public class DeptDAO implements DeptDAOInterface{
 	
 	@Autowired
 	DataSource datasource;
 	
-	public List<ManagerVO> selectAllManager() {
+	@Autowired
+	JdbcTemplate jdbcTemplatet;	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public List<DeptVO> findAll() {
+		List<DeptVO> deptlist = new ArrayList<>();
+		String sql = "select * from departments order by 1";
+		deptlist = jdbcTemplatet.query(sql, new RowMapper() {
+
+			@SuppressWarnings("unused")
+			@Override
+			public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
+				DeptVO dept = new DeptVO(rs.getInt(1), rs.getString(2), rs.getInt(3),rs.getInt(4));
+				return null;
+			}
+		});
+		return deptlist;
+	}
+
+	
+	public List<ManagerVO> findAllManager() {
 		List<ManagerVO> mlist = new ArrayList<>();
 		Connection conn = null;
 		Statement st = null;
@@ -49,7 +73,7 @@ public class DeptDAO {
 		}
 		return mlist;
 	}
-	public List<LocationVO> selectAllLocation() {
+	public List<LocationVO> findAllLocation() {
 		List<LocationVO> loclist = new ArrayList<>();
 		Connection conn = DBUtil.getConnection();
 		Statement st = null;
@@ -73,7 +97,7 @@ public class DeptDAO {
 		return loclist;
 	}
 	
-	public List<DeptVO> selectAll() {
+	/*public List<DeptVO> findAll() {
 		List<DeptVO> deptlist = new ArrayList<>();
 		Connection conn = null;
 		Statement st = null;
@@ -95,9 +119,9 @@ public class DeptDAO {
 			DBUtil.dbClose(rs, st, conn);
 		}
 		return deptlist;
-	}
+	}*/
 	
-	public int insertDept(DeptVO dept) {
+	public int insert(DeptVO dept) {
 		String sql="insert into departments values(?,?,?,?) "; 
 		Connection conn;
 		PreparedStatement st = null;
@@ -119,7 +143,7 @@ public class DeptDAO {
 		return result;
 	}
 
-	public DeptVO selectById(int i_deptid) {
+	public DeptVO findById(int i_deptid) {
 		DeptVO dept = null;
 		Connection conn = DBUtil.getConnection();
 		PreparedStatement st = null;
@@ -142,7 +166,7 @@ public class DeptDAO {
 		return dept;
 	}
 
-	public int updateDept(DeptVO dept) {
+	public int update(DeptVO dept) {
 		String sql=" update departments "
 				+ " set Department_name=?, Manager_id=?,Location_id=? "
 				+ " where Department_id=? "; 
@@ -166,7 +190,7 @@ public class DeptDAO {
 		return result;
 	}
 
-	public int deleteDept(int deptid) {
+	public int delete(int deptid) {
 		String sql=" delete from departments "
 				+ " where Department_id=? "; 
 		Connection conn;

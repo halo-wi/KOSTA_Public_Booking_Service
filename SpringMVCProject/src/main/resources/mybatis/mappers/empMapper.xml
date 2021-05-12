@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gasan.emp">
+  
+  <resultMap type="evo" id="empResult">
+    <result property="employee_id" column="employee_id"/>
+    <result property="first_name" column="first_name"/>
+  </resultMap>
+ 
+  <select id="selectAll"  resultMap="empResult">
+    select * from employees order by 1
+  </select>
+  <select id="selectById"  parameterType="int" resultType="evo">
+    select * from employees where employee_id = #{abc} 
+  </select>
+  
+  <select id="selectAllJob" resultType="com.kosta.model.JobVO">
+     select * from jobs order by 1 
+  </select>
+  
+  
+  <update id="empUpdate" parameterType="evo">
+     			 update employees  set  
+			     first_name= #{first_name},            
+			     last_name= #{last_name},     
+			     email = #{email},        
+			     phone_number= #{phone_number},       
+			     hire_date= #{hire_date},       
+			     job_id= #{job_id},    
+			     salary= #{salary},             
+			     commission_pct= #{commission_pct},       
+			     manager_id= #{manager_id},          
+			     department_id= #{department_id}         
+			 where employee_id = #{employee_id}    
+  </update>
+  
+ </mapper>
+ 
+ 
+ 

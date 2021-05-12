@@ -1,4 +1,4 @@
-package com.kosta.model;
+package com.kosta.business;
 
 //ctrl + shift + o ........import다시 
 
@@ -17,11 +17,13 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kosta.model.EmpVO;
+import com.kosta.model.JobVO;
 import com.kosta.util.DBUtil;
 
 //DAO(Data Access Object)
 @Repository
-public class EmpDAO {
+public class EmpDAO implements EmpDAOInterface{
 	
 	@Autowired
 	DataSource datasource;
@@ -409,20 +411,26 @@ public class EmpDAO {
 		return emplist;
 	}
 	
-
-	private EmpVO makeEmp(ResultSet rs) throws SQLException {
+	@Override
+	public EmpVO makeEmp(ResultSet rs) {
 		EmpVO emp = new EmpVO();
-		emp.setCommission_pct(rs.getDouble("Commission_pct"));
-		emp.setDepartment_id(rs.getInt("Department_id"));
-		emp.setEmail(rs.getString("email"));
-		emp.setEmployee_id(rs.getInt("employee_id"));
-		emp.setFirst_name(rs.getString("first_name"));
-		emp.setHire_date(rs.getDate("hire_date"));
-		emp.setJob_id(rs.getString("job_id"));
-		emp.setLast_name(rs.getString("last_name"));
-		emp.setManager_id(rs.getInt("manager_id"));
-		emp.setPhone_number(rs.getString("phone_number"));
-		emp.setSalary(rs.getInt("salary"));
+		try {
+			emp.setCommission_pct(rs.getDouble("Commission_pct"));
+			emp.setDepartment_id(rs.getInt("Department_id"));
+			emp.setEmail(rs.getString("email"));
+			emp.setEmployee_id(rs.getInt("employee_id"));
+			emp.setFirst_name(rs.getString("first_name"));
+			emp.setHire_date(rs.getDate("hire_date"));
+			emp.setJob_id(rs.getString("job_id"));
+			emp.setLast_name(rs.getString("last_name"));
+			emp.setManager_id(rs.getInt("manager_id"));
+			emp.setPhone_number(rs.getString("phone_number"));
+			emp.setSalary(rs.getInt("salary"));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		return emp;
 	}
 }
