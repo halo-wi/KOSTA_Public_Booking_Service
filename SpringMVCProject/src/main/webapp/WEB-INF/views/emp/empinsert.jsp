@@ -32,8 +32,8 @@
 메니져:
 <select name="manager_id">
 	<c:forEach items="${mlist}" var="m">
-	 	<option value="${dept.manager_id }">
-	           ${dept.fullname}</option>
+	 	<option value="${m.manager_id }">
+	           ${m.fullname}</option>
 	</c:forEach>
 </select>
 전화번호:<input type="text" name="phone_number" value="010-1234" ><br>

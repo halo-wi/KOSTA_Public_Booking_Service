@@ -36,6 +36,61 @@
 			 where employee_id = #{employee_id}    
   </update>
   
+  <insert id="empInsert" parameterType="evo">
+  
+  	insert into employees (
+  		commission_pct,
+		department_id,
+		email,
+		employee_id,
+		first_name,
+		hire_date ,
+		job_id,
+		last_name,
+		manager_id,
+		phone_number,
+		salary
+		) values(#{department_id},#{first_name},#{last_name},#{salary},#{department_id},#{manager_id},#{phone_number, jdbcType=VARCHAR},#{commission_pct},#{hire_date},#{job_id},#{email}) 
+  
+  </insert>
+  <delete id="empDelete" parameterType="int">
+  delete from employees where EMPLOYEE_ID = #{aa}
+  
+   </delete>
+   <select id="loginChk" parameterType="map" resultType="evo">
+   select * from employees where employee_id = #{empid} and email=#{email}
+ 
+   </select>
+  
+  	<select id="selectByDept" resultType="evo" parameterType="int">
+  	select * from employees where department_id = #{aa}
+  	</select>
+  	
+  	<select id="selectBySalary" resultType="evo" parameterType="map">
+  	select * from employees where salary between #{min} and #{max}
+  	</select>
+  	
+  	<select id="selectByDate" resultType="evo" parameterType="map">
+  	select * from employees  where hire_date between #{sdate} and  #{edate}
+  	</select>
+  	
+  	<select id="selectByDate2" resultType="evo" parameterType="map">
+  	select * from employees  where hire_date between #{sdate} and  #{edate}
+  	</select>
+  	
+  	<select id="selectByName" resultType="evo" parameterType="String">
+  	select * from employees where first_name like #{aa}
+  	</select>
+  	
+  	<select id="selectByDeptMany" parameterType="java.lang.List" resultType="evo">
+  	<include refid="empQuery"></include>
+  	 where department_id in 
+  	</select>
+  	
+  	<sql id="empQuery">
+  	select * from emplyoees
+  	</sql>
+  	
  </mapper>
  
  

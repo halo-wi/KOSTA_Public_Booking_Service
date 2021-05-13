@@ -2,7 +2,9 @@ package com.kosta.business;
 
 import java.sql.Date;
 import java.sql.ResultSet;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +23,11 @@ public class EmpDAOMybatis implements EmpDAOInterface{
 	
 	@Override
 	public EmpVO loginChk(int empid, String email) {
-		// TODO Auto-generated method stub
-		return null;
+		Map<String, Object> empInfo = new HashMap<String, Object>();
+		empInfo.put("empid", empid);
+		empInfo.put("email", email);
+		EmpVO emp =  session.selectOne(namespace+"loginChk", empInfo);
+		return emp;
 	}
 
 	@Override
@@ -34,8 +39,8 @@ public class EmpDAOMybatis implements EmpDAOInterface{
 
 	@Override
 	public int deleteEmp(int empid) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = session.update(namespace+"empDelete", empid);
+		return result;
 	}
 
 	@Override
@@ -47,7 +52,7 @@ public class EmpDAOMybatis implements EmpDAOInterface{
 
 	@Override
 	public int insertEmp(EmpVO emp) {
-		// TODO Auto-generated method stub
+		int i = session.insert(namespace+"empInsert", emp);
 		return 0;
 	}
 
@@ -67,32 +72,42 @@ public class EmpDAOMybatis implements EmpDAOInterface{
 
 	@Override
 	public List<EmpVO> selectByDept(int deptid) {
-		// TODO Auto-generated method stub
-		return null;
+		List<EmpVO> emplist = session.selectList(namespace+"selectByDept", deptid);
+		
+		return emplist;
 	}
 
 	@Override
 	public List<EmpVO> selectBySalary(int minsal, int maxsal) {
-		// TODO Auto-generated method stub
-		return null;
+		Map<String, Integer> salMap = new HashMap<String, Integer>();
+		salMap.put("min", minsal);
+		salMap.put("max", maxsal);
+		List<EmpVO> emplist = session.selectList(namespace+"selectBySalary", salMap);
+		return emplist;
 	}
 
 	@Override
 	public List<EmpVO> selectByDate(String sdate, String edate) {
-		// TODO Auto-generated method stub
-		return null;
+		Map<String, String> dateMap = new HashMap<>();
+		dateMap.put("sdate", sdate);
+		dateMap.put("edate", edate);
+		List<EmpVO> emplist = session.selectList(namespace+"selectByDate", dateMap);
+		return emplist;
 	}
 
 	@Override
 	public List<EmpVO> selectByDate2(Date sdate, Date edate) {
-		// TODO Auto-generated method stub
-		return null;
+		Map<String, Date> dateMap2 = new HashMap<>();
+		dateMap2.put("sdate", sdate);
+		dateMap2.put("edate", edate);
+		List<EmpVO> emplist = session.selectList(namespace+"selectByDate2", dateMap2);
+		return emplist;
 	}
 
 	@Override
 	public List<EmpVO> selectByName(String ch) {
-		// TODO Auto-generated method stub
-		return null;
+		List<EmpVO> emplist = session.selectList(namespace+"selectByName", ch);
+		return emplist;
 	}
 
 	@Override
