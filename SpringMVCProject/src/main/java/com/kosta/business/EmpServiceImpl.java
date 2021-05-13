@@ -1,18 +1,18 @@
 package com.kosta.business;
 
-import java.sql.ResultSet;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import com.kosta.model.EmpVO;
 import com.kosta.model.JobVO;
-@Repository("empservice")
-public class EmpServiceImpl implements EmpService{
-	
+
+@Service("empService")
+public class EmpServiceImpl implements EmpService {
+
 	@Autowired
 	@Qualifier("empDAOMybatis")
 	EmpDAOInterface empDAO;
@@ -66,12 +66,6 @@ public class EmpServiceImpl implements EmpService{
 	}
 
 	@Override
-	public List<EmpVO> selectByJob(String jobid) {
-		// TODO Auto-generated method stub
-		return empDAO.selectByJob(jobid);
-	}
-
-	@Override
 	public List<EmpVO> selectBySalary(int minsal, int maxsal) {
 		// TODO Auto-generated method stub
 		return empDAO.selectBySalary(minsal, maxsal);
@@ -86,7 +80,7 @@ public class EmpServiceImpl implements EmpService{
 	@Override
 	public List<EmpVO> selectByDate2(Date sdate, Date edate) {
 		// TODO Auto-generated method stub
-		return empDAO.selectByDate2(null, null);
+		return empDAO.selectByDate2(sdate, edate);
 	}
 
 	@Override
@@ -98,13 +92,12 @@ public class EmpServiceImpl implements EmpService{
 	@Override
 	public List<EmpVO> selectByCondition(int deptid, String jobid, int sal, Date hdate) {
 		// TODO Auto-generated method stub
-		return empDAO.selectByCondition(deptid, jobid, sal, null);
+		return empDAO.selectByCondition(deptid, jobid, sal, hdate);
 	}
 
 	@Override
-	public EmpVO makeEmp(ResultSet rs) {
+	public List<EmpVO> selectBydeptmany(List<Integer> deptidList) {
 		// TODO Auto-generated method stub
-		return null;
+		return empDAO.selectBydeptmany(deptidList);
 	}
-
 }

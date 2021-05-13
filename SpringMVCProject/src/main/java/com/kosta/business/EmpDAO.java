@@ -1,6 +1,6 @@
 package com.kosta.business;
 
-//ctrl + shift + o ........import다시 
+//ctrl + shift + o .
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -20,23 +20,23 @@ import org.springframework.stereotype.Repository;
 import com.kosta.model.EmpVO;
 import com.kosta.model.JobVO;
 import com.kosta.util.DBUtil;
-
+//CRUD(Create:insert, Read:select U:Update, D:Delete)
 //DAO(Data Access Object)
 @Repository
 public class EmpDAO implements EmpDAOInterface{
-	
+
 	@Autowired
 	DataSource datasource;
 
-	//CRUD(Create:insert, Read:select U:Update, D:Delete)	
-	
 	public EmpVO loginChk(int empid, String email) {
+		
 		EmpVO emp = null;
-		Connection conn = DBUtil.getConnection();
+		Connection conn = null;
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		String sql = "select * from employees where employee_id = ? and email=?";
 		try {
+			conn = datasource.getConnection();
 			st = conn.prepareStatement(sql);
 			st.setInt(1, empid);
 			st.setString(2, email);
@@ -52,7 +52,6 @@ public class EmpDAO implements EmpDAOInterface{
 		}
 		return emp;
 	}
-	
 	public List<JobVO> selectAllJobs() {
 		List<JobVO> joblist = new ArrayList<>();
 		Connection conn = null;
@@ -81,8 +80,9 @@ public class EmpDAO implements EmpDAOInterface{
 		String sql = "delete from employees where EMPLOYEE_ID = ? ";
 		Connection conn;
 		PreparedStatement st = null;
-		conn = DBUtil.getConnection();
+		conn = null;
 		try {
+			conn = datasource.getConnection();
 			st = conn.prepareStatement(sql);
 			st.setInt(1, empid);
 			result = st.executeUpdate();
@@ -113,10 +113,11 @@ public class EmpDAO implements EmpDAOInterface{
 			    " DEPARTMENT_ID=?   "+      
 			" where EMPLOYEE_ID = ?   ";
 					
-		Connection conn;
+		Connection conn = null;
 		PreparedStatement st = null;
-		conn = DBUtil.getConnection();
+		
 		try {
+			conn = datasource.getConnection();
 			st = conn.prepareStatement(sql);
 			st.setInt(11, emp.getEmployee_id());
 			st.setString(1,  emp.getFirst_name());
@@ -143,17 +144,15 @@ public class EmpDAO implements EmpDAOInterface{
 		
 		return result;
 	}
-	
-	
-	//����ڰ� ���� ���ؼ� ȸ������ =>controller=>DAO=>DB
+
 	public int insertEmp(EmpVO emp) {
 		String sql="insert into employees values(?,?,?,?,?,?,?,?,?,?,?) "; 
-		Connection conn =  null;
+		Connection conn = null;
 		PreparedStatement st = null;
 		int result = 0;
 		try {
 			conn = datasource.getConnection();
-			conn.setAutoCommit(false); //�ѹ��� ����SQL���� �����ϰ����ϴ� ��� ��� 
+			conn.setAutoCommit(false); //占싼뱄옙占쏙옙 占쏙옙占쏙옙SQL占쏙옙占쏙옙 占쏙옙占쏙옙占싹곤옙占쏙옙占싹댐옙 占쏙옙占� 占쏙옙占� 
 			st = conn.prepareStatement(sql);
 			st.setInt(1, emp.getEmployee_id());
 			st.setString(2,  emp.getFirst_name());
@@ -184,16 +183,14 @@ public class EmpDAO implements EmpDAOInterface{
 		return result;
 	}
 
-
-	
 	public List<EmpVO> selectAll() {
 		List<EmpVO> emplist = new ArrayList<>();
 		Connection conn = null;
 		Statement st = null;
 		ResultSet rs = null;
-		String sql = "select * from employees";
+		String sql = "select * from employees  order by 1";
 		try {
-			conn =  datasource.getConnection();
+			conn = datasource.getConnection();
 			st = conn.createStatement();
 			rs = st.executeQuery(sql);
 			while (rs.next()) {
@@ -210,15 +207,14 @@ public class EmpDAO implements EmpDAOInterface{
 		return emplist;
 	}
 
-	// 2.�⺻Ű(Primary key)..null�Ұ�, �ʼ�Į��,�ߺ�����
-	// ������ȣ�� ��ȸ
 	public EmpVO selectById(int empid) {
 		EmpVO emp = null;
-		Connection conn = DBUtil.getConnection();
+		Connection conn = null;
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		String sql = "select * from employees where employee_id = ?";
 		try {
+			conn = datasource.getConnection();
 			st = conn.prepareStatement(sql);
 			st.setInt(1, empid);
 			rs = st.executeQuery();
@@ -234,7 +230,6 @@ public class EmpDAO implements EmpDAOInterface{
 		return emp;
 	}
 
-	// 3.�μ��� ��ȸ
 	public List<EmpVO> selectByDept(int deptid) {
 		List<EmpVO> emplist = new ArrayList<>();
 		Connection conn = null;
@@ -258,14 +253,14 @@ public class EmpDAO implements EmpDAOInterface{
 		return emplist;
 	}
 
-	// 4.job_id�� ��ȸ
 	public List<EmpVO> selectByJob(String jobid) {
 		List<EmpVO> emplist = new ArrayList<>();
-		Connection conn = DBUtil.getConnection();
+		Connection conn = null;
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		String sql = "select * from employees where job_id = ?";
 		try {
+			conn = datasource.getConnection();
 			st = conn.prepareStatement(sql);
 			st.setString(1, jobid);
 			rs = st.executeQuery();
@@ -281,14 +276,14 @@ public class EmpDAO implements EmpDAOInterface{
 		return emplist;
 	}
 
-	// 5.�޿��� ��ȸ
 	public List<EmpVO> selectBySalary(int minsal, int maxsal) {
 		List<EmpVO> emplist = new ArrayList<>();
-		Connection conn = DBUtil.getConnection();
+		Connection conn = null;
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		String sql = "select * from employees where salary between ? and ?";
 		try {
+			conn = datasource.getConnection();
 			st = conn.prepareStatement(sql);
 			st.setInt(1, minsal);
 			st.setInt(2, maxsal);
@@ -305,14 +300,14 @@ public class EmpDAO implements EmpDAOInterface{
 		return emplist;
 	}
 
-	// 6.�Ի�����ȸ
 	public List<EmpVO> selectByDate(String sdate, String edate) {
 		List<EmpVO> emplist = new ArrayList<>();
-		Connection conn = DBUtil.getConnection();
+		Connection conn = null;
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		String sql = "select * from employees " + " where hire_date between ? and  ?";
 		try {
+			conn = datasource.getConnection();
 			st = conn.prepareStatement(sql);
 			st.setString(1, sdate);
 			st.setString(2, edate);
@@ -329,15 +324,15 @@ public class EmpDAO implements EmpDAOInterface{
 		return emplist;
 	}
 
-	// 6.�Ի�����ȸ
 	public List<EmpVO> selectByDate2(Date sdate, Date edate) {
 		List<EmpVO> emplist = new ArrayList<>();
-		Connection conn = DBUtil.getConnection();
+		Connection conn = null;
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		String sql = "select * from employees " + 
 		" where hire_date between ? and  ?";
 		try {
+			conn = datasource.getConnection();
 			st = conn.prepareStatement(sql);
 			st.setDate(1, sdate);
 			st.setDate(2, edate);
@@ -354,15 +349,15 @@ public class EmpDAO implements EmpDAOInterface{
 		return emplist;
 	}
 
-	// 7.�̸��� Ư�����ڰ� �� ��� ��ȸ
 	public List<EmpVO> selectByName(String ch) {
 		List<EmpVO> emplist = new ArrayList<>();
-		Connection conn = DBUtil.getConnection();
+		Connection conn = null;
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		String sql = "select * from employees " + 
 		" where first_name like  ?";
 		try {
+			conn = datasource.getConnection();
 			st = conn.prepareStatement(sql);
 			st.setString(1, "%"+ch+"%");
 		
@@ -378,12 +373,11 @@ public class EmpDAO implements EmpDAOInterface{
 		}
 		return emplist;
 	}
-	
-	// 8.����������ȸ(�μ�,job,salary,hire_date)
+
 	public List<EmpVO> selectByCondition(int deptid, 
 			                 String jobid, int sal,Date hdate) {
 		List<EmpVO> emplist = new ArrayList<>();
-		Connection conn = DBUtil.getConnection();
+		Connection conn = null;
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		String sql = "select * from employees " + 
@@ -392,6 +386,7 @@ public class EmpDAO implements EmpDAOInterface{
 		        " and salary >= ? " +
 				" and hire_date between ? and add_months(?, 24) ";
 		try {
+			conn = datasource.getConnection();
 			st = conn.prepareStatement(sql);
 			st.setInt(1, deptid);
 			st.setString(2, jobid);
@@ -411,26 +406,25 @@ public class EmpDAO implements EmpDAOInterface{
 		return emplist;
 	}
 	
-	@Override
-	public EmpVO makeEmp(ResultSet rs) {
+
+	private EmpVO makeEmp(ResultSet rs) throws SQLException {
 		EmpVO emp = new EmpVO();
-		try {
-			emp.setCommission_pct(rs.getDouble("Commission_pct"));
-			emp.setDepartment_id(rs.getInt("Department_id"));
-			emp.setEmail(rs.getString("email"));
-			emp.setEmployee_id(rs.getInt("employee_id"));
-			emp.setFirst_name(rs.getString("first_name"));
-			emp.setHire_date(rs.getDate("hire_date"));
-			emp.setJob_id(rs.getString("job_id"));
-			emp.setLast_name(rs.getString("last_name"));
-			emp.setManager_id(rs.getInt("manager_id"));
-			emp.setPhone_number(rs.getString("phone_number"));
-			emp.setSalary(rs.getInt("salary"));
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+		emp.setCommission_pct(rs.getDouble("Commission_pct"));
+		emp.setDepartment_id(rs.getInt("Department_id"));
+		emp.setEmail(rs.getString("email"));
+		emp.setEmployee_id(rs.getInt("employee_id"));
+		emp.setFirst_name(rs.getString("first_name"));
+		emp.setHire_date(rs.getDate("hire_date"));
+		emp.setJob_id(rs.getString("job_id"));
+		emp.setLast_name(rs.getString("last_name"));
+		emp.setManager_id(rs.getInt("manager_id"));
+		emp.setPhone_number(rs.getString("phone_number"));
+		emp.setSalary(rs.getInt("salary"));
 		return emp;
+	}
+	@Override
+	public List<EmpVO> selectBydeptmany(List<Integer> deptidList) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
