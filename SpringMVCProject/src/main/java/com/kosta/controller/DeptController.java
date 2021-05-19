@@ -14,7 +14,7 @@ public class DeptController {
    
    
    //보통 DAO를 Service에서 호출하지 아래처럼 호출하지는 않는다.
-   //보통 DAO도 인터페이스로 받아서 사용한다.
+     //보통 DAO도 인터페이스로 받아서 사용한다.
    @Autowired //DeptDAO deptDAO=new DeptDAO();
    DeptServiceImpl service;
    
@@ -56,5 +56,14 @@ public class DeptController {
       service.insert(dept);
       return "redirect:/dept/deptlist.do";
    }
+   
+   @RequestMapping(value = "/dept/transactionTest.do")
+   public String insertUpdate() {
+	   DeptVO new_dept = new DeptVO(1, "t1", 100, 1700);
+	   DeptVO update_dept = new DeptVO(10, "t2", 100, 1700);
+	   service.insertUpdate(new_dept, update_dept);
+	   return "dept/transactionTest.do"; 
+   }
+   
    
 }

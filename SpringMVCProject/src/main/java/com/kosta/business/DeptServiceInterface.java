@@ -14,4 +14,5 @@ public interface DeptServiceInterface {
 	
 	public List<ManagerVO> findAllManager(); 
 	public List<LocationVO> findAllLocation(); 
+	public int insertUpdate(DeptVO new_dept, DeptVO update_dept);
 }

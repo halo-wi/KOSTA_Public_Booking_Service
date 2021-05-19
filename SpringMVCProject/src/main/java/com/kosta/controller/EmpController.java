@@ -24,7 +24,7 @@ public class EmpController {
 	@Autowired
 	EmpService empService;
 	
-	@Autowired
+	  @Autowired
 	DeptServiceInterface deptService;
 	
 	

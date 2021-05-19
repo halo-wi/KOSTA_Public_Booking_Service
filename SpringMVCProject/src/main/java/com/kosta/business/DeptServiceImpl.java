@@ -58,4 +58,11 @@ public class DeptServiceImpl implements DeptServiceInterface{
 		return deptDAO.findAllLocation();
 	}
 
+	@Override
+	public int insertUpdate(DeptVO new_dept, DeptVO update_dept) {
+		int ret1 = deptDAO.insert(new_dept);
+		int ret2 = deptDAO.update(update_dept);
+		return ret1+ret2;
+	}
+
 }
