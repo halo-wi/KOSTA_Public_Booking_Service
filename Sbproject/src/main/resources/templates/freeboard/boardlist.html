@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="~{layout/layout1}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+  table, td, th {
+  	border: 1px solid black;
+  	border-collapse: collapse;
+  }
+  .myclass{background-color: lightgray; color:orange;}
+  .myclass2{font-size:30px;}
+</style>
+<script th:inline="javascript">
+window.onload = function() {
+	/* var obj = [[${boardlist}]]; */
+	alert(obj);
+	console.log(obj);
+}
+</script>
+</head>
+<body>
+<div class="panel panel-defualt" layout:fragment="content1">
+
+	<!-- <div th:insert="fragments/header::header2"></div>
+	<div th:insert="fragments/footer::footer2"></div> -->
+<h1>FreeBoard 목록</h1>
+<table>
+	<tr>
+		<th>index</th><th>count</th><th>size</th>
+		<th>first</th>
+		<th>last</th>
+		<th>odd</th>
+		<th>even</th>
+		<th>번호</th><th>title</th><th>content</th><th>writer</th><th>지역변수연습</th>
+		<th>작성일</th><th>수정일</th>
+	</tr>
+	<tr th:each="board, boardState2:${boardlist}" 
+		th:class="${boardState2.odd}? 'myclass'"
+		th:classappend="${(boardState2.first or boardState2.last? 'myclass2':'')+(boardState2.count==5?'myclass2':'')}"
+		th:with="a=10,b=20,target='writer7'">	<!-- 첫 번째가 borad 두 번째가 상태 값 -->
+		<td th:text="${boardState2.index+1}">index는 0부터시작</td>
+		<td th:text="${boardState2.count}">count는 1부터시작</td>
+		<td th:text="${boardState2.size+a+b}">size</td>
+		<td th:text="${boardState2.first}">first</td>		
+		<td th:text="${boardState2.last}">last</td>		
+		<td th:text="${boardState2.odd}">odd</td>		
+		<td th:text="${boardState2.even}">even</td>		
+		<td th:class="${boardState2.count==4}?'myclass2':'' "th:text="${board.bno}"></td>
+		<td th:text="|제목은 ${board.title}|"></td>
+		<td th:text="${board.content}"></td>
+		<td th:text="${board.writer}"></td>
+		<td th:text="${board.writer==target?'타겟':'손님'}"></td>
+		<td th:text="${board.regdate}"></td>
+		<td th:text="${board.updatedate}"></td>
+		
+		
+	</tr>
+</table>
+</div>
+</body>
+</html>

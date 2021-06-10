@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout1}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<div class="panel panel-default" layout:fragment="content1">
+		<h1 class="panel-heading">Board 신규등록</h1>
+		<div class="panel-body">
+		
+			<form class="form-inline" th:action="@{register}" method="post">
+				<div class="form-group">
+					<label for="title">title:</label> <br>
+					<input type="text" class="form-control" id="title" placeholder="enter title" name = "title">
+					<p class="help-block">여기는 제목입니다.</p>
+				</div><br><br>
+				<div class="form-group">
+					<label for="content">content:</label><br>
+					<textarea class="form-group" rows="3" cols="" id="content" name ="content"></textarea>
+				</div><br><br><br>
+				<div class="form-group">
+					<label for="writer">writer:</label> <br>
+					<input type="text"class="form-control" id="writer" placeholder="enter writer" name="writer">
+				</div><br><br><br>
+		
+				<button type="submit" class="btn btn-success">등록하기</button>
+				<button type="reset" class="btn btn-primary">reset</button>
+			</form>
+
+		</div>
+
+	</div>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+</head>
+<body>
+<h1>표현식 유틸리티객체</h1>
+<p th:text="${now}"></p>
+<p th:text="${#dates.format(now,'yyy-MM-dd')}"></p>
+<!-- 지역변수 : 하위만 가능 -->
+<div th:with="aa=${#dates.format(now,'yyy-MM-dd')}">
+	<p>[[${aa}]]</p>
+	<p th:text="${aa}"></p>
+</div>
+<p th:text="${price}"></p>
+<p th:text="${#numbers.formatInteger(price, 3, 'COMMA')}"></p>
+<p th:text="${#numbers.formatDecimal(price, 5, 10, 'POINT')}"></p>
+<div th:with="price2=123.45">
+	<p th:text="${#numbers.formatDecimal(price2, 5, 10, 'POINT')}"></p>	
+	<p th:text="${#numbers.formatDecimal(3.14, 5, 10, 'POINT')}"></p>	
+</div>
+<p th:text="${title}"></p>
+<p th:utext="${#strings.replace(title, 's', '<b>s</b>')}"></p>
+<p th:utext="${#strings.replace(title, ' ', '<br>')}"></p>
+<p th:text="${#strings.replace(title, 's', '<b>s</b>')}"></p>
+<p th:text="${#strings.toUpperCase(title)}"></p>
+
+<ul>
+	<li th:each="aa:${#strings.listSplit(title, ' ')}">
+		[[${aa}]]
+	</li>
+</ul>
+<ul>
+	<li th:each="fruit:${options}">[[${fruit}]]</li>
+</ul>
+
+</body>
+</html>

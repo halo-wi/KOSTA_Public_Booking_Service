@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<!-- <script th:inline="javascript">
+
+var obj = [[${boardlist}]];
+console.log(obj);
+$.each(obj, function(i,elt) {
+	console.log(i +"==>"+elt["title"]);
+}); -->
+
+</script>
+</head>
+<body>
+<h1>객체정보 조회...Expression Basic Object</h1>
+<p>[[${board}]]</p>
+<p>[[${#vars.board}]]</p>
+<p>[[${#response.characterEncoding}]]</p>
+<p th:text="${@environment.getProperty('app.title')}"></p>
+<p>세션정보:[[${session.user}]]</p>
+<p>세션정보:[[${session["user"]}]]</p>
+<p th:text="${session.user}">!!!!</p>
+<p>파라메타:[[${param.myname}]]</p>
+<p>파라메타:[[${#request.getParameter('myname')}]]</p>
+<p th:text="${param.myname}"></p>
+<h1>표현식 유틸리티객체</h1>
+<p th:if="${not #lists.isEmpty(boardlist)}">값이있다.</p>
+<p th:if="${#lists.isEmpty(boardlist)}">값이없다.</p>
+</body>
+</html>

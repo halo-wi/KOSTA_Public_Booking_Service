@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script th:inline="javascript">
+window.onload = function() {
+	/* var obj = [[${boardlist}]]; */
+	console.log(obj);
+}
+</script>
+</head>
+<body>
+<div>
+<h1>한 건의 board정보</h1>
+<p th:text="${board.bno}">보드번호</p>
+<p th:text="${board.title}">title</p>
+<p th:text="${board.content}">content</p>
+<p th:text="${board.writer}">writer</p>
+<p th:text="${board.regdate}">regdate</p>
+<p th:text="${board.updatedate}">update</p>
+</div>
+</body>
+</html>
